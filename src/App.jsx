@@ -1,15 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import './index.css'
 
 function App() {
-  const [todos, setTodos] = React.useState([]);
+  const [todos, setTodos] = React.useState(JSON.parse(localStorage.getItem("todos")) || []);
   const [todo, setTodo] = React.useState("");
 
   const submitHandler = (e) => {
     e.preventDefault();
-    setTodos([todo, ...todos]);
-    setTodo("");
+    if(!todo){
+    }else{
+      setTodos([todo, ...todos ]);
+      setTodo('');
+    }
   };
+
+
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos))
+  })
   
   return (
     <div className="container mx-auto">
@@ -22,15 +30,15 @@ function App() {
         {
           todos.length === 0 ? <h1 className="text-center font-bold text-red-500">belum ada data</h1> :
             todos.map((todo, index) => (
-              <div className="content_list">
+              <div key={index} className="content_list">
                 <div className="flex justify-between text-lg border-b-2 border-gray-500 py-2">
                   <div className="flex gap-x-4">
                     <span>{index + 1}</span>
                     <p>{todo}</p>
                   </div>
                   <div className="flex gap-x-2">
-                    <button  className="bg-green-500 rounded-md hover:bg-green-600 px-2 hover:text-white"><i class="ri-edit-box-line"></i></button>
-                    <button className="bg-red-500 rounded-md hover:bg-red-600 px-2 hover:text-white"><i class="ri-delete-bin-6-line"></i></button>
+                    <button  className="bg-green-500 rounded-md hover:bg-green-600 px-2 hover:text-white"><i className="ri-edit-box-line"></i></button>
+                    <button className="bg-red-500 rounded-md hover:bg-red-600 px-2 hover:text-white"><i className="ri-delete-bin-6-line"></i></button>
                   </div>
                 </div>
               </div>
