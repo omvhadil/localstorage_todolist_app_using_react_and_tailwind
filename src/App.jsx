@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import './index.css'
 
 function App() {
-  const [todos, setTodos] = React.useState(JSON.parse(localStorage.getItem("todos")) || []);
-  const [todo, setTodo] = React.useState("");
+  const [todos, setTodos] = useState(JSON.parse(localStorage.getItem("todos")) || []);
+  const [todo, setTodo] = useState("");
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -14,10 +14,16 @@ function App() {
     }
   };
 
+  const deleteTodo = (index) => {
+    const newTodos = [...todos];
+    newTodos.splice(index - 1, 1);
+    setTodos(newTodos);
+  }
+
 
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todos))
-  })
+  }, [todos])
   
   return (
     <div className="container mx-auto">
@@ -38,7 +44,7 @@ function App() {
                   </div>
                   <div className="flex gap-x-2">
                     <button  className="bg-green-500 rounded-md hover:bg-green-600 px-2 hover:text-white"><i className="ri-edit-box-line"></i></button>
-                    <button className="bg-red-500 rounded-md hover:bg-red-600 px-2 hover:text-white"><i className="ri-delete-bin-6-line"></i></button>
+                    <button onClick={() => deleteTodo(index + 1)} className="bg-red-500 rounded-md hover:bg-red-600 px-2 hover:text-white"><i className="ri-delete-bin-6-line"></i></button>
                   </div>
                 </div>
               </div>
