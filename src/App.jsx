@@ -73,6 +73,9 @@ function App() {
               </div>
             ))
         }
+        <div className="text-center mt-32 ">
+          <p class="text-dark">&#169; 2023 copyright By Alabim</p>
+        </div>
       </div>
     </div>
   )
